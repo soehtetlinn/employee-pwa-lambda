@@ -1,51 +1,29 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
+import './App.css';
+import React from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter,HashRouter as Router,Route,Routes} from 'react-router-dom';
+import EmployeeList from './components/EmployeeList.js';
+import DashboardEmployee from './components/employee/DashboardEmployee.jsx'
+import EmployeeDetails from './components/EmployeeDetails';
+import EmployeeForm from "./components/EmployeeForm";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import NotFound from "./components/NotFound";
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+const App = () => {
+  return (
+    // <EmployeeList />
+    <Router>
+      <Routes>
+        <Route path="/" element={<DashboardEmployee />} />
+    {/* //     <Route path="/employees/:id" component={EmployeeDetails} />
+    //     <Route path="/form" component={EmployeeForm} />
+    //     <Route component={Header} />
+    //     <Route component={NotFound} />
+    //     <Route component={Footer} /> */}
+      </Routes>
+    </Router>
+  );
+};
 
-  handleClick = api => e => {
-    e.preventDefault()
-
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
-
-  render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        <div>Hello World</div>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
-}
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <LambdaDemo />
-        </header>
-      </div>
-    )
-  }
-}
-
-export default App
+export default App;
